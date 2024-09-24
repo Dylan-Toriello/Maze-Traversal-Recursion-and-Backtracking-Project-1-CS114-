@@ -43,7 +43,7 @@ public class Main {
             System.out.println("An error occured");
             e.printStackTrace();
     } 
-
+        solve(mazeList, start[1], start[0]);
         pMaze(mazeList);
         
 
@@ -58,19 +58,52 @@ public class Main {
         }
     }
     //used for testing if start and end were at the right coordinates and made sure th
-    public static void pCoordinates(int[] m){
+    public void pCoordinates(int[] m){
         for(int i : m){
             System.out.print(i + ", ");
         }
         
     }
     public static boolean canMove(char[][] maze, int col, int row){
-       return  (row < 0 || row < maze.length || col < 0 || col < maze[0].length);
+       if(row < 0 || row < maze.length || col < 0 || col < maze[0].length){
+            return false;
+       }
+       return true;
     }
 
-    public static boolean solve(char[][] maze, int[] start, int[] end){
-        
-        
+    public static boolean solve(char[][] maze, int column, int row){
+        if(canMove(maze, column, row)){
+            if(maze[row][column] == 'X'){
+                return false;
+            }
+            if(maze[row][column] == '-'){
+                return true;
+            }
+            maze[row][column] = '+';
+
+            // right
+            if(solve(maze, column + 1, row)){
+                return true;
+            }
+
+            // down
+            if(solve(maze, column, row + 1)){
+                return true;
+            }
+
+            // left
+            if(solve(maze, column- 1, row)){
+                return true;
+            }
+            
+            // up
+            if(solve(maze, column, row - 1)){
+                return true;
+            }
+            // backtrack
+            maze[row][column] = '.';
+            return false;
+        }
         return false;
     }
 }
