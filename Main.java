@@ -65,7 +65,7 @@ public class Main {
         
     }
     public static boolean canMove(char[][] maze, int col, int row){
-       if(row < 0 || row < maze.length || col < 0 || col < maze[0].length){
+       if(row < 0 || row > maze.length || col < 0 || col > maze[0].length){
             return false;
        }
        return true;
